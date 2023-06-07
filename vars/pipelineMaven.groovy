@@ -4,11 +4,9 @@ def call(Map settings = [:]) {
 
         stages {
             stage('Get Source Code') {
-                {
                     // pobiera kod z mastera
                     //git branch: settings.branch ?: 'main', url: settings.repository
                     checkout ([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs:[[url: "https://github.com/kappel420/spring-petclinic"]]])
-                }
             }
 
             stage('Build with Maven') {
