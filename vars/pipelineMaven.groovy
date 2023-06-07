@@ -4,22 +4,17 @@ def call(Map settings = [:]) {
 
         stages {
             stage('Get Source Code') {
-                steps {
                     // pobiera kod z mastera
                     //git branch: settings.branch ?: 'main', url: settings.repository
                     checkout ([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs:[[url: "https://github.com/kappel420/spring-petclinic"]]])
-                }
             }
 
             stage('Build with Maven') {
-                steps {
                     // buduje mavena
                     sh 'mvn package -DskipTests'
-                }
             }
 
             stage('Run Tests') {
-                steps {
                     script {
                         try {
                             if (!settings.skipTests) {
@@ -31,13 +26,10 @@ def call(Map settings = [:]) {
                         }
                     }
                 }
-            }
 
             stage('Install Artifact') {
-                steps {
                     // instaluje artefakt
                     sh 'mvn install -DskipTests'
-                }
             }
         }
     }
