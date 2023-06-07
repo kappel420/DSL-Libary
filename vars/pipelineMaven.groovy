@@ -1,12 +1,13 @@
-def call(Map settings = [repository: 'https://github.com/kappel420/spring-petclinic', branch: 'main', skipTests: false]) {
+//def call(Map settings = [repository: 'https://github.com/kappel420/spring-petclinic', branch: 'main', skipTests: false]) {
+def call(Map settings = [:]) {
     node {
         agent any
 
         stages {
             stage('Get Source Code') {
                     // pobiera kod z mastera
-                    git branch: settings.branch ?: 'main', url: settings.repository
-                    //checkout ([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs:[[url: "https://github.com/kappel420/spring-petclinic"]]])
+                    //git branch: settings.branch ?: 'main', url: settings.repository
+                    checkout ([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs:[[url: "https://github.com/kappel420/spring-petclinic"]]])
             }
 
             stage('Build with Maven') {
