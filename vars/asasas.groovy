@@ -1,5 +1,9 @@
 //def call(Map settings = [repository: 'https://github.com/kappel420/spring-petclinic', branch: 'main', skipTests: false]) {
-def call(Map settings = [:]) {
+def call(Map config) {
+    def repository = config.repository
+    def branch = config.branch
+    def skipTests = config.skipTests ?: false
+    def skipInstall = config.skipInstall ?: false
     node {
         agent any
 
