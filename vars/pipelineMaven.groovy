@@ -1,39 +1,43 @@
-//def call(Map settings = [repository: 'https://github.com/kappel420/spring-petclinic', branch: 'main', skipTests: false]) {
-def call(Map settings = [:]) {
-    node {
-        agent any
+// DSL-Library/src/org/example/PipelineDSL.groovy
 
+def call(Map config) {
+    def repository = config.repository
+    def branch = config.branch
+    def skipTests = config.skipTests ?: false
+    def skipInstall = config.skipInstall ?: false
+
+    pipeline {
+        agent none
         stages {
-            stage('Get Source Code') {
-                    // pobiera kod z mastera
-                    //git branch: settings.branch ?: 'main', url: settings.repository
-                    checkout ([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs:[[url: "https://github.com/kappel420/spring-petclinic"]]])
-            }
-
-            stage('Build with Maven') {
-                    // buduje mavena
-                    sh 'mvn package -DskipTests'
-                
-            }
-
-            stage('Run Tests') {
+            stage('Example') {
+                agent any
+                steps {
                     script {
-                        try {
-                            if (!settings.skipTests) {
-                                sh 'mvn verify'
-                                junit 'target/surefire-reports/*.xml'
-                            }
-                        } catch (Exception e) {
-                            archiveArtifacts allowEmptyArchive: true, artifacts: 'target/surefire-reports/*.xml'
-                        }
-                    
+                        echo "test"
+                    }
+                    script {
+                        pipelineMavenStep(repository, branch, skipTests, skipInstall)
+                    }
                 }
             }
-
-            stage('Install Artifact') {
-                    // instaluje artefakt
-                    sh 'mvn install -DskipTests'
-            }
         }
+    }
+}
+
+def pipelineMavenStep(repository, branch, skipTests, skipInstall) {
+    stage('Fetch Source Code') {
+        // Code to fetch source code from the repository
+    }
+
+    stage('Build') {
+        // Code to build the project using 'mvn package -DskipTests'
+    }
+
+    stage('Run Tests') {
+        // Code to run tests using 'mvn verify' and import JUnit results
+    }
+
+    stage('Install Artifact') {
+        // Code to install artifact in local repository using 'mvn install -DskipTests'
     }
 }
