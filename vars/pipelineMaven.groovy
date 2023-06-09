@@ -27,8 +27,10 @@ def call(Map config = [:]) {
             }
             stage('Install Artifact') {
                 steps {
-                    if (!config.skipInstall) {
-                        sh 'mvn install -DskipTests'
+                    script {
+                        if (!config.skipInstall) {
+                            sh 'mvn install -DskipTests'
+                        }
                     }
                 }
             }
