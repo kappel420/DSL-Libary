@@ -14,7 +14,6 @@ def call(Map config = [:]) {
                         extensions: [[$class: 'CleanBeforeCheckout'], [$class: 'CloneOption', honorRefspec: false]]])
                 }
             }
-        }
             stage('Build') {
                 steps {
                     sh 'mvn package -DskipTests'
@@ -22,7 +21,7 @@ def call(Map config = [:]) {
             }
             stage('Run Tests') {
                 steps {
-                    script{
+                    script {
                         try {
                             if (!settings.skipTests) {
                                 sh 'mvn verify'
@@ -30,9 +29,9 @@ def call(Map config = [:]) {
                             }
                         } catch (Exception e) {
                             archiveArtifacts allowEmptyArchive: true, artifacts: 'target/surefire-reports/*.xml'
-                    }
                 }
-                }
+            }
+            }
             stage('Install Artifact') {
                 steps {
                     script {
@@ -43,5 +42,6 @@ def call(Map config = [:]) {
         }
     }
 }
-    }
+}
+}
 }
