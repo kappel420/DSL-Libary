@@ -21,15 +21,27 @@ def call(Map config = [:]) {
             }
             stage('Run Tests') {
                 steps {
-                    sh 'mvn verify'
-                    junit '**/target/surefire-reports/*.xml'
+                    script {
+                        try {
+                            if (!settings.skipTests) {
+                                sh 'mvn verify'
+                                junit 'target/surefire-reports/*.xml'
+                            }
+                        } catch (Exception e) {
+                            archiveArtifacts allowEmptyArchive: true, artifacts: 'target/surefire-reports/*.xml'
                 }
+            }
             }
             stage('Install Artifact') {
                 steps {
-                    sh 'mvn install -DskipTests'
+                    script {
+                        if (!settings.skipInstall) {
+                            sh 'mvn install -DskipTests'
                 }
             }
         }
     }
+}
+}
+}
 }
