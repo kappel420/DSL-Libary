@@ -9,12 +9,11 @@ def call(Map config = [:]) {
             stage('Fetch Source Code') {
                 steps {
                     checkout([$class: 'GitSCM',
-                        branches: [[name: config.branch ?: 'master']],
+                        branches: [[name: config.branch ?: 'main']],
                         userRemoteConfigs: [[url: config.repository ?: '']],
                         extensions: [[$class: 'CleanBeforeCheckout'], [$class: 'CloneOption', honorRefspec: false]]])
                 }
             }
-        }
             stage('Build') {
                 steps {
                     sh 'mvn package -DskipTests'
@@ -22,26 +21,17 @@ def call(Map config = [:]) {
             }
             stage('Run Tests') {
                 steps {
-                    script{
-                        try {
-                            if (!settings.skipTests) {
-                                sh 'mvn verify'
-                                junit 'target/surefire-reports/*.xml'
-                            }
-                        } catch (Exception e) {
-                            archiveArtifacts allowEmptyArchive: true, artifacts: 'target/surefire-reports/*.xml'
-                    }
+                    sh 'mvn verify'
+                    junit '**/target/surefire-reports/*.xml'
                 }
-                }
+            }
             stage('Install Artifact') {
                 steps {
-                    script {
                         if (!settings.skipInstall) {
                             sh 'mvn install -DskipTests'
                 }
+                }
             }
         }
-    }
-}
     }
 }
