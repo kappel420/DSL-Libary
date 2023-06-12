@@ -10,7 +10,7 @@ def call(Map config = [:], String a) {
     }
 
     stage('Run Tests') {
-        if (params.skipTests) {
+        if (!params.skipTests) {
             sh 'mvn verify'
             junit '**/target/surefire-reports/*.xml'
         }
@@ -36,7 +36,7 @@ def call(Map config = [:]) {
     }
 
     stage('Run Tests') {
-        if (params.skipTests) {
+        if (!params.skipTests) {
             sh 'mvn verify'
             junit '**/target/surefire-reports/*.xml'
         }
