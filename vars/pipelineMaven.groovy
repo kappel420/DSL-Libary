@@ -43,6 +43,7 @@ def call(Map config = [:]) {
 
 def call(Map config = [:], String a) {
     pipeline {
+        node{
         agent {
             label 'tomek'
         }
@@ -83,4 +84,4 @@ def call(Map config = [:], String a) {
             }
         }
     }
-
+}
