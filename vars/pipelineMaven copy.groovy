@@ -1,4 +1,4 @@
-def call(Map config = [:], Closure body) {
+def tester(Map config = [:], Closure body) {
     def script = CpsScript.current()
     script.node {
         wrap([$class: 'AnsiColorBuildWrapper']) {
@@ -13,7 +13,7 @@ def call(Map config = [:], Closure body) {
     }
 }
 
-def call(Map config = [:], Closure body) {
+def call(Map config) {
     pipeline {
         agent {
             label 'tomek'

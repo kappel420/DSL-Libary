@@ -1,17 +1,19 @@
-def call(Map config = [:]) {
-    wrap([$class: 'TimestamperBuildWrapper']) {
+def tester(Map config = [:], Closure body) {
+    def script = CpsScript.current()
+    script.node {
         wrap([$class: 'AnsiColorBuildWrapper']) {
+            wrap([$class: 'TimestamperBuildWrapper']) {
                 try {
-                    pipelineBody(config)
+                    body()
                 } finally {
-                    cleanWs()
+                    script.cleanWs()
                 }
+            }
         }
     }
 }
 
-def pipelineBody(Map config) {
-    // Your existing pipeline code here
+def call(Map config) {
     pipeline {
         agent {
             label 'tomek'
