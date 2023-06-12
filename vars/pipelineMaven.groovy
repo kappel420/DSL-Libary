@@ -12,7 +12,7 @@ def customNode(Closure body) {
     }
 }
 
-def call(Map config = [:]) {
+def call(Map config = [:], Closure body) {
     pipeline {
         agent {
             label 'tomek'
