@@ -1,7 +1,23 @@
 def call(Map config = [:]) {
+    wrap([$class: 'TimestamperBuildWrapper']) {
+        wrap([$class: 'AnsiColorBuildWrapper']) {
+            node {
+                try {
+                    pipelineBody(config)
+                } finally {
+                    cleanWs()
+                }
+            }
+        }
+    }
+}
+
+def call(Map config = [:]) {
     pipeline {
         agent {
-            label 'tomek'
+            node {
+                label 'tomek'
+            }
         }
         stages {
             stage('Fetch Source Code') {
