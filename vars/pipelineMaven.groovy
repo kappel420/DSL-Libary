@@ -1,13 +1,11 @@
 def call(Map config = [:]) {
     wrap([$class: 'TimestamperBuildWrapper']) {
         wrap([$class: 'AnsiColorBuildWrapper']) {
-            node {
                 try {
                     pipelineBody(config)
                 } finally {
                     cleanWs()
                 }
-            }
         }
     }
 }
