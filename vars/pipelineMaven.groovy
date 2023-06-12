@@ -1,4 +1,4 @@
-def call(Map config = [:], Closure body) {
+def customNode(Map config = [:], Closure body) {
     def script = CpsScript.current()
     script.node {
         wrap([$class: 'AnsiColorBuildWrapper']) {
