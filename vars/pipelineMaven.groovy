@@ -19,7 +19,6 @@ def pipelineBody(Map config = [:]) {
                 label 'tomek'
             }
         }
-        stages {
             stage('Fetch Source Code') {
                 steps {
                     node {
@@ -62,4 +61,3 @@ def pipelineBody(Map config = [:]) {
             }
         }
     }
-}
