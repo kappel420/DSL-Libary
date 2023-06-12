@@ -41,7 +41,7 @@ def call(Map config = [:]) {
 }
 
 
-def calll(Map config = [:], String a) {
+def call(Map config = [:], String a) {
     pipeline {
         agent {
             label 'tomek'
