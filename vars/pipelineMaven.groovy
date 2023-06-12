@@ -1,18 +1,6 @@
-def pipelineMaven(Closure body) {
-    node {
-        wrap([$class: 'AnsiColorBuildWrapper']) {
-            wrap([$class: 'TimestamperBuildWrapper']) {
-                try {
-                    body()
-                } finally {
-                    step([$class: 'WsCleanup'])
-                }
-            }
-        }
-    }
-}
+// DSL-Library/src/org/example/PipelineDSL.groovy
 
-def pipelineMaven(Map config = [:]) {
+def call(Map config = [:]) {
     pipeline {
         agent {
             label 'tomek'

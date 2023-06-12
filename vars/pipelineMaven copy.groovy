@@ -1,17 +1,4 @@
 // DSL-Library/src/org/example/PipelineDSL.groovy
-def call(Closure body) {
-    node {
-        wrap([$class: 'AnsiColorBuildWrapper']) {
-            wrap([$class: 'TimestamperBuildWrapper']) {
-                try {
-                    body()
-                } finally {
-                    cleanWs()
-                }
-            }
-        }
-    }
-}
 
 def call(Map config = [:]) {
     pipeline {
