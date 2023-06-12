@@ -38,10 +38,14 @@ def call(Map config = [:]) {
             stage('Run Tests') {
                 steps {
                     customNode {
+                        script {
+                            if (!config.skipTests) {
                         sh 'mvn verify'
                         junit '**/target/surefire-reports/*.xml'
                     }
                 }
+            }
+            }
             }
             stage('Install Artifact') {
                 steps {
