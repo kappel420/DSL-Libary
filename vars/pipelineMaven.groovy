@@ -1,4 +1,4 @@
-def call(Map config = [:], String a) {
+def call(Map config = [:]) {
     node {
     stage('Fetch Source Code') {
         checkout scm
@@ -25,7 +25,7 @@ def call(Map config = [:], String a) {
 }
 
 
-def call(Map config = [:]) {
+def call(Map config = [:], String a) {
     node {
         wrap([$class: 'AnsiColorBuildWrapper']) {
             wrap([$class: 'TimestamperBuildWrapper']) {
