@@ -1,11 +1,7 @@
-def call(Map config = [:]) {
+def call(Map config = [skipTests : 1, skipInstall : 1]) {
     node {
     stage('Fetch Source Code') {
-        checkout([$class: 'GitSCM',
-            branches: [[name: params.branch ?: 'main']],
-            userRemoteConfigs: [[url: params.repository ?: '']],
-            extensions: [[$class: 'CleanBeforeCheckout'], [$class: 'CloneOption', honorRefspec: false]]
-        ])
+        checkout scm
     }
 
     stage('Build') {
@@ -13,14 +9,14 @@ def call(Map config = [:]) {
     }
 
     stage('Run Tests') {
-        if (!params.skipTests) {
+        if (!skipTests == 1) {
             sh 'mvn verify'
             junit '**/target/surefire-reports/*.xml'
         }
     }
 
     stage('Install Artifact') {
-        if (!params.skipInstall) {
+        if (!skipInstall == 1) {
             sh 'mvn install -DskipTests'
         }
     }
