@@ -1,11 +1,12 @@
-def call(Closure body) {
-    node {
+def call(Map config = [:], Closure body) {
+    def script = CpsScript.current()
+    script.node {
         wrap([$class: 'AnsiColorBuildWrapper']) {
             wrap([$class: 'TimestamperBuildWrapper']) {
                 try {
                     body()
                 } finally {
-                    cleanWs()
+                    script.cleanWs()
                 }
             }
         }
