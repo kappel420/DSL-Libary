@@ -33,8 +33,10 @@ def call(Map config = [:]) {
             }
             stage('Run Tests') {
                 steps {
+                    if (!config.skipInstall) {
                     sh 'mvn verify'
                     junit '**/target/surefire-reports/*.xml'
+                    }
                 }
             }
             stage('Install Artifact') {
