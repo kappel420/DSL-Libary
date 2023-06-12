@@ -12,7 +12,7 @@ def call(Map config = [:]) {
     }
 }
 
-def call(Map config = [:]) {
+def pipelineBody(Map config = [:]) {
     pipeline {
         agent {
             node {
