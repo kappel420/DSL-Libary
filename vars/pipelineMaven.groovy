@@ -1,4 +1,4 @@
-def call(Map config = [skipTests : 1, skipInstall : 1]) {
+def call(Map config = [:]) {
     node {
     stage('Fetch Source Code') {
         checkout scm
@@ -9,14 +9,14 @@ def call(Map config = [skipTests : 1, skipInstall : 1]) {
     }
 
     stage('Run Tests') {
-        if (!skipTests == 1) {
+        if (params.skipTests) {
             sh 'mvn verify'
             junit '**/target/surefire-reports/*.xml'
         }
     }
 
     stage('Install Artifact') {
-        if (!skipInstall == 1) {
+        if (!params.skipInstall) {
             sh 'mvn install -DskipTests'
         }
     }
