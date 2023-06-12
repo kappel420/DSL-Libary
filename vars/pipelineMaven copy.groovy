@@ -1,19 +1,4 @@
-def tester(Map config = [:], Closure body) {
-    def script = CpsScript.current()
-    script.node {
-        wrap([$class: 'AnsiColorBuildWrapper']) {
-            wrap([$class: 'TimestamperBuildWrapper']) {
-                try {
-                    body()
-                } finally {
-                    script.cleanWs()
-                }
-            }
-        }
-    }
-}
-
-def call(Map config) {
+def call(Map config = [:]) {
     pipeline {
         agent {
             label 'tomek'
