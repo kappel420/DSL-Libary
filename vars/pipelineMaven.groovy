@@ -1,4 +1,18 @@
 // DSL-Library/src/org/example/PipelineDSL.groovy
+def call(Closure body) {
+    // Overriding the 'node' step
+    node {
+        wrap([$class: 'AnsiColorBuildWrapper']) {
+            wrap([$class: 'TimestamperBuildWrapper']) {
+                try {
+                    body()
+                } finally {
+                    step([$class: 'WsCleanup'])
+                }
+            }
+        }
+    }
+}
 
 def call(Map config = [:]) {
     pipeline {
