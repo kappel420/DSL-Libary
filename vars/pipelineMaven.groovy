@@ -46,7 +46,6 @@ def call(Map config = [:], String a) {
         agent {
             label 'tomek'
         }
-        stages {
             stage('Fetch Source Code') {
                 steps {
                     checkout([$class: 'GitSCM',
@@ -91,4 +90,4 @@ def call(Map config = [:], String a) {
             }
         }
     }
-}
+
