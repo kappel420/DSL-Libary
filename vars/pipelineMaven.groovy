@@ -34,7 +34,7 @@ def call(Map config = [:]) {
             stage('Run Tests') {
                 steps {
                     script{
-                        if (!config.skipInstall) {
+                        if (!config.skipTests) {
                             sh 'mvn verify'
                             junit '**/target/surefire-reports/*.xml'
                         }
