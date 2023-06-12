@@ -20,7 +20,6 @@ def call(Map config = [:]) {
         stages {
             stage('Fetch Source Code') {
                 steps {
-                    customNode {
                         checkout([$class: 'GitSCM',
                             branches: [[name: config.branch ?: 'main']],
                             userRemoteConfigs: [[url: config.repository ?: '']],
@@ -30,14 +29,12 @@ def call(Map config = [:]) {
             }
             stage('Build') {
                 steps {
-                    customNode {
                         sh 'mvn package -DskipTests'
                     }
                 }
             }
             stage('Run Tests') {
                 steps {
-                    customNode {
                         script {
                             if (!config.skipTests) {
                         sh 'mvn verify'
@@ -49,7 +46,6 @@ def call(Map config = [:]) {
             }
             stage('Install Artifact') {
                 steps {
-                    customNode {
                         script {
                             if (!config.skipInstall) {
                                 sh 'mvn install -DskipTests'
@@ -57,7 +53,3 @@ def call(Map config = [:]) {
                         }
                     }
                 }
-            }
-        }
-    }
-}
