@@ -29,7 +29,6 @@ def call(Map config = [:]) {
     node {
         wrap([$class: 'AnsiColorBuildWrapper']) {
             wrap([$class: 'TimestamperBuildWrapper']) {
-                try {
     stage('Fetch Source Code') {
         checkout scm
     }
