@@ -9,12 +9,12 @@ def myNode(Closure body) {
 }
 
 def call(Map config = [:], Closure body) {
-  pipeline {
-    agent {
-      label 'tomek'
-    }
-    stages {
-      myNode {
+  myNode {
+    pipeline {
+      agent {
+        label 'tomek'
+      }
+      stages {
         stage('Fetch Source Code') {
           steps {
             checkout([$class: 'GitSCM',
