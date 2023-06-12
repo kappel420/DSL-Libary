@@ -1,4 +1,4 @@
-def customNode(Closure body) {
+def call(Closure body) {
     node {
         wrap([$class: 'AnsiColorBuildWrapper']) {
             wrap([$class: 'TimestamperBuildWrapper']) {
