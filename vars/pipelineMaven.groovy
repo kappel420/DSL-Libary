@@ -1,12 +1,12 @@
 def call(Map config = [:]) {
     node {
     stage('Fetch Source Code') {
+        cleanWs()
         checkout scm
     }
 
     stage('Build') {
         sh 'mvn package -DskipTests'
-        echo "dupa"
     }
 
     stage('Run Tests') {
@@ -19,6 +19,7 @@ def call(Map config = [:]) {
     stage('Install Artifact') {
         if (!params.skipInstall) {
             sh 'mvn install -DskipTests'
+            cleanWs deleteDirs: true
         }
     }
 }
