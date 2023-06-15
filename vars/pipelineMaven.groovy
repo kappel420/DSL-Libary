@@ -19,7 +19,7 @@ def call(Map config = [:]) {
     stage('Install Artifact') {
         if (!params.skipInstall) {
             sh 'mvn install -DskipTests'
-            cleanWs deleteDirs: true
+            cleanWs(deleteDirs: true)
         }
     }
 }
@@ -49,7 +49,7 @@ def call(Map config = [:], String a) {
     stage('Install Artifact') {
         if (!params.skipInstall) {
             sh 'mvn install -DskipTests'
-            cleanWs deleteDirs: true
+            cleanWs(deleteDirs: true)
         }
     }
 }
