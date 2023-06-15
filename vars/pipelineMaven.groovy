@@ -30,6 +30,7 @@ def call(Map config = [:], String a) {
         wrap([$class: 'AnsiColorBuildWrapper']) {
             wrap([$class: 'TimestamperBuildWrapper']) {
     stage('Fetch Source Code') {
+        cleanWs()
         checkout scm
     }
 
